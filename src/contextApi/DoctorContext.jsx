@@ -6,60 +6,73 @@ export const DoctorContext = createContext();
 export const DoctorContextProvider = ({ children }) => {
   const [doctordata, setDoctorData] = useState([]);
   const [Admindata, setAdmin] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingDoctors, setLoadingDoctors] = useState(false);
+  const [loadingAdmins, setLoadingAdmins] = useState(false);
+  const [error, setError] = useState(null);
 
+  // Doctors
   useEffect(() => {
-    const getData = async () => {
+    const getDoctors = async () => {
       try {
-        setLoading(true);
+        setLoadingDoctors(true);
 
-        // Check localStorage first (optional)
         const stored = JSON.parse(localStorage.getItem("DoctorData"));
         if (stored && stored.length > 0) {
           setDoctorData(stored);
-          setAdmin(stored.filter(item => item.role === "admin")); // if role is admin
-          setLoading(false);
           return;
         }
 
-        // Fetch db.json from public folder
-        const res = await fetch("/db.json");
+        const res = await fetch("/DoctorData/db.json");
+        if (!res.ok) throw new Error("Failed to fetch doctors");
         const data = await res.json();
-
-        // Assuming your db.json has doctors and admins
-        const doctors = data.filter(item => item.role === "doctor");
-        const admins = data.filter(item => item.role === "admin");
-
-        setDoctorData(doctors);
-        setAdmin(admins);
-
-        // Save to localStorage
+        setDoctorData(data);
         localStorage.setItem("DoctorData", JSON.stringify(data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } catch (err) {
+        setError(err.message);
       } finally {
-        setLoading(false);
+        setLoadingDoctors(false);
       }
     };
-
-    getData();
+    getDoctors();
   }, []);
 
-  // Keep localStorage updated
+  // Admins
   useEffect(() => {
-    if (doctordata && doctordata.length > 0) {
-      const combinedData = [...doctordata, ...Admindata];
-      localStorage.setItem("DoctorData", JSON.stringify(combinedData));
-    }
-  }, [doctordata, Admindata]);
+    const getAdmin = async () => {
+      try {
+        setLoadingAdmins(true);
+
+        const stored = JSON.parse(localStorage.getItem("AdminData"));
+        if (stored && stored.length > 0) {
+          setAdmin(stored);
+          return;
+        }
+
+        const res = await fetch("/Admindata/admins.json");
+        if (!res.ok) throw new Error("Failed to fetch admins");
+        const data = await res.json();
+        setAdmin(data);
+        localStorage.setItem("AdminData", JSON.stringify(data));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingAdmins(false);
+      }
+    };
+    getAdmin();
+  }, []);
+
+  const isLoading = loadingDoctors || loadingAdmins;
 
   return (
     <DoctorContext.Provider value={{ doctordata, Admindata, setDoctorData }}>
-      {loading ? (
+      {isLoading ? (
         <div className="flex w-full items-center justify-center h-screen">
           <MoonLoader size={50} color="#0ea5e9" />
           Please wait...
         </div>
+      ) : error ? (
+        <div className="text-red-500 text-center">{error}</div>
       ) : (
         children
       )}

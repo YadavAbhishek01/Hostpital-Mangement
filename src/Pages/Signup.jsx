@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 import BasicAlerts from "../Componets/Succesmessage/Alerts";
-
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 function Signup() {
+ 
   const navigate = useNavigate();
   const [signupData, setSignData] = useState([]);
-
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,21 +18,23 @@ function Signup() {
   const [Birthdate, setBirthdate] = useState("");
   const [submit, setSubmit] = useState(false);
 
-  // touched states
+
   const [nametouch, setNameTouch] = useState(false);
   const [emailtouch, setEmailTouch] = useState(false);
   const [passwordtouch, setPasswordTouch] = useState(false);
   const [confirmpasswordtouch, setConfirmPasswordTouch] = useState(false);
   const [phonetouch, setPhoneTouch] = useState(false);
 
-  // validation states
+
   const [Validname, setValidName] = useState(null);
   const [Validemail, setValidEmail] = useState(null);
   const [Validpassword, setValidPassword] = useState(null);
   const [validconfirmpassword, setValidConfirmPassword] = useState(null);
   const [ValidPhone, setValidPhone] = useState(null);
 
-  // regex
+  const[showpassword,setShowPassword]=useState(false)
+   const[Showconfirmpassoword,setsshowconfirmPassword]=useState(false)
+
   const nameregex = /^[A-Za-z]+([ '-][A-Za-z]+)*$/;
   const emailregex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   const passwordregex =
@@ -199,8 +201,9 @@ function Signup() {
           <div className="mb-4">
             <label className="block mb-1 font-semibold">Password</label>
             <span className="text-zinc-500">Password must be at least 8 characters</span>
+           <div className="flex relative ">
             <input
-              type="password"
+              type={showpassword ? 'text ' :'password'}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -209,9 +212,14 @@ function Signup() {
               }}
               onBlur={() => setPasswordTouch(true)}
               placeholder="Enter your password"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              className=" relative   w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
               required
+             maxLength={16}
             />
+              
+            {showpassword  ? ( <IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setShowPassword((prev)=>!prev)}/>):(<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setShowPassword((prev)=>!prev)}/>)}
+            
+            </div>  
             {passwordtouch && password !== "" && Validpassword !== null && (
               Validpassword ? (
                 <div className="flex gap-1.5 mt-2">
@@ -236,8 +244,9 @@ function Signup() {
           {/* Confirm Password */}
           <div className="mb-6">
             <label className="block mb-1 font-semibold">Confirm Password</label>
-            <input
-              type="password"
+            <div  className="flex relative">
+                <input
+             type={Showconfirmpassoword ? 'text ' :'password'}
               value={confirmpassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
@@ -249,6 +258,9 @@ function Signup() {
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
               required
             />
+             {Showconfirmpassoword ? ( <IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setsshowconfirmPassword((prev)=>!prev)}/>):(<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setsshowconfirmPassword((prev)=>!prev)}/>)}
+            </div>
+          
             {confirmpasswordtouch &&
               confirmpassword !== "" &&
               validconfirmpassword !== null && (

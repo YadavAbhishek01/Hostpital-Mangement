@@ -21,7 +21,7 @@ const Navbar = () => {
     const userloginData = JSON.parse(
       localStorage.getItem("singupData") || "[]"
     );
-    const Admindata = JSON.parse(localStorage.getItem("Admindata") || "[]");
+    const Admindata = JSON.parse(localStorage.getItem("AdminData") || "[]");
     setLoginData(JSON.parse(localStorage.getItem("LoginUser")));
     setRole(roleData);
     setUserInfo(userloginData);

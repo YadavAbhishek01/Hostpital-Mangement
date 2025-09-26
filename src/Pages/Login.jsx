@@ -25,16 +25,16 @@ function Login() {
     },[])
 
 useEffect(() => {
-  const stored = JSON.parse(localStorage.getItem("Admindata"));
+  const stored = JSON.parse(localStorage.getItem("AdminData"));
   if (stored && stored.length > 0) {
     setAdmin(stored);
   }
 }, []);
-useEffect(() => {
-  if (Admindata && Admindata.length > 0) {
-    localStorage.setItem("Admindata", JSON.stringify(Admindata));
-  }
-}, [Admindata]);
+// useEffect(() => {
+//   if (Admindata && Admindata.length > 0) {
+//     localStorage.setItem("Admindata", JSON.stringify(Admindata));
+//   }
+// }, [Admindata]);
   
 
 

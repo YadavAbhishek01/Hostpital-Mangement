@@ -8,64 +8,53 @@ export const DoctorContextProvider = ({ children }) => {
   const [Admindata, setAdmin] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
-    const getDoctors = async () => {
+    const getData = async () => {
       try {
         setLoading(true);
 
-    
+        // Check localStorage first (optional)
         const stored = JSON.parse(localStorage.getItem("DoctorData"));
         if (stored && stored.length > 0) {
           setDoctorData(stored);
+          setAdmin(stored.filter(item => item.role === "admin")); // if role is admin
           setLoading(false);
-          return; 
+          return;
         }
 
-   
-        const res = await fetch("http://localhost:3000/doctors");
+        // Fetch db.json from public folder
+        const res = await fetch("/db.json");
         const data = await res.json();
-        setDoctorData(data);
 
-  
+        // Assuming your db.json has doctors and admins
+        const doctors = data.filter(item => item.role === "doctor");
+        const admins = data.filter(item => item.role === "admin");
+
+        setDoctorData(doctors);
+        setAdmin(admins);
+
+        // Save to localStorage
         localStorage.setItem("DoctorData", JSON.stringify(data));
       } catch (error) {
-        console.error("Error fetching doctors:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    getDoctors();
+    getData();
   }, []);
 
-
-  useEffect(() => {
-    const getAdmin = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("http://localhost:3000/admins");
-        const data = await res.json();
-        setAdmin(data);
-      } catch (error) {
-        console.error("Error fetching Admin", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getAdmin();
-  }, []);
-
-
+  // Keep localStorage updated
   useEffect(() => {
     if (doctordata && doctordata.length > 0) {
-      localStorage.setItem("DoctorData", JSON.stringify(doctordata));
+      const combinedData = [...doctordata, ...Admindata];
+      localStorage.setItem("DoctorData", JSON.stringify(combinedData));
     }
-  }, [doctordata]);
+  }, [doctordata, Admindata]);
 
   return (
     <DoctorContext.Provider value={{ doctordata, Admindata, setDoctorData }}>
-    
       {loading ? (
         <div className="flex w-full items-center justify-center h-screen">
           <MoonLoader size={50} color="#0ea5e9" />

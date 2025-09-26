@@ -43,7 +43,7 @@ const Footer = () => {
 
 
       <div className="border-t border-zinc-300 py-4 text-center text-sm text-zinc-500">
-        © 2024 Greatstack.dev - All Rights Reserved.
+        © 2024 Abhishek-Creation.dev - All Rights Reserved.
       </div>
     </footer>
   )

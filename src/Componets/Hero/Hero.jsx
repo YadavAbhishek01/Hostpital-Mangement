@@ -33,10 +33,10 @@ const [roledata,setRoleData]=useState(null)
   return (
 
     <div className="px-4 md:px-18 h-full ">
-      <div className="container mx-auto bg-sky-500 rounded-lg p-6 md:p-12 flex flex-col md:flex-row items-center gap-8">
+      <div className="container mx-auto bg-sky-500 rounded-lg flex flex-col md:flex-row items-center gap-8">
         
       
-        <div className="flex-1 flex flex-col gap-6 text-center md:text-left">
+        <div className="flex-1 flex flex-col gap-6 text-center md:text-left p-7">
           <p className="text-white text-4xl md:text-6xl font-bold">
             Book Appointment
             <span className="block text-2xl md:text-3xl mt-2">
@@ -62,7 +62,7 @@ const [roledata,setRoleData]=useState(null)
         </div>
 
       
-        <div className="flex-1 flex justify-center md:justify-end">
+        <div className="flex-1 flex justify-center md:justify-end  ">
           <img
             src="https://prescripto.vercel.app/assets/header_img-DhAi3lLA.png"
             alt="Doctor Illustration"

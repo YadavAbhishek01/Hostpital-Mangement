@@ -85,12 +85,12 @@ useEffect(() => {
          else
          {
             setError(true);
-             toast.error("email or password not found please register!!")
+             toast.error("Invalid Credetials")
          }
           
       }
         else{
-          toast.error("Email or passwrod not Match")
+          toast.error("Invalid Credetials")
           
         }
 
@@ -140,7 +140,7 @@ useEffect(() => {
           >
             Login
           </button>
-          {error ? <span className="text-red-600">!email or password not found please register</span> :''}
+          {/* {error ? <span className="text-red-600">!email or password not found please register</span> :''} */}
         </form>
    
 

@@ -39,13 +39,13 @@ const AllDoctorDetails = () => {
         <select
           name="specialist"
           id="specialist"
-          className="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition w-full md:w-60"
+          className="px-4  py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400 transition w-64 md:w-60"
           value={specialty}
           onChange={(e) => setSpecialty(e.target.value)}
         >
           <option value="">All Specialists</option>
           {uniqueSpecialties.map((spec, i) => (
-            <option key={i} value={spec}>
+            <option key={i} value={spec} className="w-2xs">
               {spec}
             </option>
           ))}

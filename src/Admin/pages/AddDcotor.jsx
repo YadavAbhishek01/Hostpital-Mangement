@@ -11,12 +11,15 @@ const AddDoctor = () => {
     const[Experiance,setExperiance]=useState('')
     const[About,setAbout]=useState('')
     const[Fees,setFees]=useState('')
-    const[image,setImage]=useState('')
+    const[image,setImage]=useState(null)
     const[Status,setStatus]=useState(false)
     const [store,setstore]=useState([])
     const [DoctoreData,setDoctorData]=useState([])
 
     const {doctordata}=useContext(DoctorContext)
+    const [validPhone,setvalidPhone]=useState(false)
+    const [phonetouch,setPhonetouch]=useState(false)
+    const phoneregex=/^[6-9]\d{9}$/
 
     useEffect(() => {
   const stored = JSON.parse(localStorage.getItem("DoctorData"));
@@ -33,7 +36,8 @@ const AddDoctor = () => {
 
     const handlesubmit=(e)=>{
         e.preventDefault();
-
+        const isphonevalid=phoneregex.test(Phone)
+        setvalidPhone(isphonevalid)
       const Id=DoctoreData.length>0 ?Number(DoctoreData[DoctoreData.length-1].id)+1:1;
         const newDoctor={
           id:nanoid(),
@@ -61,6 +65,18 @@ const AddDoctor = () => {
 
        toast.success("Doctor added")
     }
+    const handlerimage=(e)=>{
+        const file=e.target.files[0];
+        if(file)
+        {
+          const reader=new FileReader();
+          reader.onloadend=()=>{
+            setImage(reader.result);
+          }
+          reader.readAsDataURL(file)
+        }
+        
+    } 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-2xl">
       <h2 className="text-2xl font-semibold text-gray-700 mb-6">
@@ -105,13 +121,21 @@ const AddDoctor = () => {
           </label>
           <input
             value={Phone}
-          onChange={(e)=>setPhone(e.target.value)}
-            type="telno"
+          onChange={(e)=>{setPhone(e.target.value)
+           setvalidPhone(phoneregex.test(e.target.value))
+          }}
+            type="tel"
             maxLength={10}
-            placeholder="555-1234"
+            placeholder="9599562615"
+            onBlur={()=>setPhonetouch(true)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:outline-none"
             required
           />
+        {phonetouch && (
+    validPhone
+      ? <span className="text-green-500">✅ Valid Phone</span>
+      : <span className="text-red-500">❌ Invalid Phone</span>
+  )}
         </div>
 
         {/* Experience */}
@@ -164,12 +188,13 @@ const AddDoctor = () => {
             Image URL
           </label>
           <input
-          value={image}
-         onChange={(e)=>setImage(e.target.value)}
-            type="text"
+          // value={image}
+          onChange={handlerimage}
+            type="file"
+            accept="image/*"
             placeholder="https://raw.githubusercontent.com/.../doc1.png"
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-sky-400 focus:outline-none"
-          />
+           />
         </div>
 
         {/* Active Status */}

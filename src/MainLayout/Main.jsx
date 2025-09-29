@@ -9,19 +9,14 @@ const Main = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-   
       <Navbar />
 
-      <div className="flex flex-1 w-full">
-   
-        {admin === "Admin" && (
-          <aside className="w-64">
-            <Sidebar />
-          </aside>
-        )}
+      <div className="flex flex-1 w-full relative">
+        {/* Sidebar only if admin */}
+        {admin === "Admin" && <Sidebar />}
 
-     
-        <main className="flex-1 px-6 py-6 overflow-y-auto mt-20">
+        {/* Main content */}
+        <main className="flex-1 px-4 sm:px-6 py-6 overflow-y-auto mt-20">
           <Outlet />
         </main>
       </div>

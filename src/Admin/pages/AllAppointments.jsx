@@ -47,16 +47,16 @@ const AllAppointments = () => {
                 className="grid grid-cols-7 items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
               >
                 <p className="font-medium">{i + 1}</p>
-                <p className="truncate">{doc.Patient_details?.PatientsName}</p>
+                <p className="">{doc.Patient_details?.PatientsName }</p>
                 <p>{doc.Patient_details?.Age || "-"}</p>
                 <p>
                   {doc.Date} <span className="text-gray-500">{doc.Time}</span>
                 </p>
-              <div className="flex items-center justify-center  w-full rounded-full"> 
+              <div className="flex items-center justify-center  w-full rounded-full flex-col"> 
                   <img src={doc.image} alt="" className="w-10 rounded-full" />
-                <p>{doc.name}</p> 
+                <p className="text-xs">{doc.name.slice()}</p> 
               </div>
-                <p className="text-green-600 font-semibold">
+                <p className="text-green-600 font-semibold text-xs">
                   ${doc.Fees || "0"}
                 </p>
                 <div className="flex justify-center">

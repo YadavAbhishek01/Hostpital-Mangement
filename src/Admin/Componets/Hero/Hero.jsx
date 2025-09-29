@@ -3,7 +3,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { FaBook } from "react-icons/fa";
 import { FcBusinessman, FcAdvertising } from "react-icons/fc";
 import DoctorContext from "../../../contextApi/DoctorContext";
-
+// import '../Hero/hero.css'
 const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
   // const { doctordata } = useContext(DoctorContext);
@@ -19,7 +19,7 @@ const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
   const activedoctor = doctordata.filter((doc) => doc.isActive);
 
   return (
-    <div className="w-full px-6 py-6">
+    <div className="w-full  bg-sky-200 px-6 py-6 hero">
       {/* Top Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {/* Active Doctors */}

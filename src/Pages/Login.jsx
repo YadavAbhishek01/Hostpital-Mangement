@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useNavigation, useParams } from "react-router-dom";
-
+import "@ant-design/v5-patch-for-react-19";
+import { message } from "antd";
 import { toast } from "react-toastify";
 import DoctorContext from "../contextApi/DoctorContext";
 
@@ -43,7 +44,7 @@ useEffect(() => {
       
         if(!localData)
         {
-          toast.error("email or password not found please register!!")
+          toast.error("Email or Password not found please register!!")
         }
        const user= localData.find((data)=>data.Email=== email  && data.Password===passsword)
        
@@ -71,7 +72,7 @@ useEffect(() => {
          const admin= Admindata.find((data)=>(data.email===email && data.password===passsword));
          if(admin)
          {
-           toast.success("Succefully login")
+           message.success("Succefully login")
         
             localStorage.setItem("role",JSON.stringify("Admin"))
             setRole("Admin")

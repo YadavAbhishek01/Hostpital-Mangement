@@ -23,13 +23,13 @@ const Doctor = () => {
     
 
  
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  "   onClick={()=>navigate('/all-doctor')}>
         {doctordata.length===0 ?"not Doctor Availabel":''}
         {location.pathname==="/all-doctor" ?   doctordata?.map((doctor, i) => (
           <div 
             key={i} 
             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-          >
+         >
       
             <img 
               src={doctor.image} 

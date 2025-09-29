@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Footer = () => {
+  const navigate=useNavigate()
   const[getrole,setGetrole]=useState(null)
   useEffect(()=>{
     const role=JSON.parse(localStorage.getItem("role"))
     setGetrole(role)
+
   })
   return (
-    <footer className="bg-zinc-100 text-zinc-700 mt-10 z-10">
+    <footer className="bg-zinc-100 text-zinc-700 mt-10 z-10 px-10">
       {!getrole && (  <div className="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <img 
@@ -25,8 +28,8 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-3">Company</h3>
           <ul className="space-y-2 text-sm">
-            <li className="hover:text-sky-600 cursor-pointer">Home</li>
-            <li className="hover:text-sky-600 cursor-pointer">About</li>
+            <li className="hover:text-sky-600 cursor-pointer" onClick={()=>navigate('/')}>Home</li>
+            <li className="hover:text-sky-600 cursor-pointer"onClick={()=>navigate('/about')}>About</li>
             <li className="hover:text-sky-600 cursor-pointer">Delivery</li>
             <li className="hover:text-sky-600 cursor-pointer">Privacy Policy</li>
           </ul>
@@ -35,8 +38,8 @@ const Footer = () => {
       
         <div>
           <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
-          <p className="text-sm">📞 +91 99999 99999</p>
-          <p className="text-sm">📧 abc@gmail.com</p>
+          <p className="text-sm">📞 +91 8050480504</p>
+          <p className="text-sm">📧 capabhi@gmail.com</p>
         </div>
       </div>)}
     

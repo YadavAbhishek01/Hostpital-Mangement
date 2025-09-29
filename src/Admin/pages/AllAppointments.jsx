@@ -10,9 +10,14 @@ const AllAppointments = () => {
 
   const handlecancel=(id)=>{
 
-    const cancelappoin=appointments.filter((doc)=>(doc.id)!==id)
+    if(window.confirm("Are You Sure"))
+    {
+      const cancelappoin=appointments.filter((doc)=>(doc.id)!==id)
     setAppointments(cancelappoin)
     localStorage.setItem("Appoinments",JSON.stringify(cancelappoin))
+    
+    }
+    
        
 
   } 

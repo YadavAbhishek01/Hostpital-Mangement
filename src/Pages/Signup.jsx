@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import BasicAlerts from "../Componets/Succesmessage/Alerts";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 function Signup() {
- 
+
   const navigate = useNavigate();
   const [signupData, setSignData] = useState([]);
   const [fullname, setFullName] = useState("");
@@ -32,8 +32,8 @@ function Signup() {
   const [validconfirmpassword, setValidConfirmPassword] = useState(null);
   const [ValidPhone, setValidPhone] = useState(null);
 
-  const[showpassword,setShowPassword]=useState(false)
-   const[Showconfirmpassoword,setsshowconfirmPassword]=useState(false)
+  const [showpassword, setShowPassword] = useState(false)
+  const [Showconfirmpassoword, setsshowconfirmPassword] = useState(false)
 
   const nameregex = /^[A-Za-z]+([ '-][A-Za-z]+)*$/;
   const emailregex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -119,7 +119,7 @@ function Signup() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         {submit && <BasicAlerts />}
 
         <form onSubmit={handleSubmit}>
@@ -162,8 +162,9 @@ function Signup() {
 
           {/* Email */}
           <div className="mb-4">
-            <label className="block mb-1 font-semibold">Email</label>
-            <input
+            <label className="  block mb-1 font-semibold">Email</label>
+          <div className="relative">
+              <input
               type="email"
               value={email}
               onChange={(e) => {
@@ -173,9 +174,11 @@ function Signup() {
               }}
               onBlur={() => setEmailTouch(true)}
               placeholder="Enter your email"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+              className="  w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
               required
             />
+           <img src=" https://img.icons8.com/?size=20&id=Ww1lcGqgduif&format=png&color=000000" alt=""  className="absolute top-3 right-2"/>
+          </div>
             {emailtouch && email !== "" && Validemail !== null && (
               Validemail ? (
                 <div className="flex gap-1.5 mt-2">
@@ -200,26 +203,31 @@ function Signup() {
           {/* Password */}
           <div className="mb-4">
             <label className="block mb-1 font-semibold">Password</label>
-            <span className="text-zinc-500">Password must be at least 8 characters</span>
-           <div className="flex relative ">
-            <input
-              type={showpassword ? 'text ' :'password'}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setValidPassword(passwordregex.test(e.target.value));
-                if (!passwordtouch) setPasswordTouch(true);
-              }}
-              onBlur={() => setPasswordTouch(true)}
-              placeholder="Enter your password"
-              className=" relative   w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-             maxLength={16}
-            />
-              
-            {showpassword  ? ( <IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setShowPassword((prev)=>!prev)}/>):(<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setShowPassword((prev)=>!prev)}/>)}
-            
-            </div>  
+            <div className="flex  flex-col text-sm">
+           
+              <span className="text-red-500">Note*</span>
+                 <span className="text-zinc-500">Password must be at least 8 characters Like:1451@Abcd</span>
+           
+            </div>
+            <div className="flex relative ">
+              <input  
+                type={showpassword ? 'text ' : 'password'}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setValidPassword(passwordregex.test(e.target.value));
+                  if (!passwordtouch) setPasswordTouch(true);
+                }}
+                onBlur={() => setPasswordTouch(true)}
+                placeholder="Enter your password"
+                className=" relative   w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+                required
+                maxLength={16}
+              />
+
+              {showpassword ? (<IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={() => setShowPassword((prev) => !prev)} />) : (<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={() => setShowPassword((prev) => !prev)} />)}
+
+            </div>
             {passwordtouch && password !== "" && Validpassword !== null && (
               Validpassword ? (
                 <div className="flex gap-1.5 mt-2">
@@ -244,23 +252,23 @@ function Signup() {
           {/* Confirm Password */}
           <div className="mb-6">
             <label className="block mb-1 font-semibold">Confirm Password</label>
-            <div  className="flex relative">
-                <input
-             type={Showconfirmpassoword ? 'text ' :'password'}
-              value={confirmpassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setValidConfirmPassword(e.target.value === password);
-                if (!confirmpasswordtouch) setConfirmPasswordTouch(true);
-              }}
-              onBlur={() => setConfirmPasswordTouch(true)}
-              placeholder="Confirm your password"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-             {Showconfirmpassoword ? ( <IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setsshowconfirmPassword((prev)=>!prev)}/>):(<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={()=>setsshowconfirmPassword((prev)=>!prev)}/>)}
+            <div className="flex relative">
+              <input
+                type={Showconfirmpassoword ? 'text ' : 'password'}
+                value={confirmpassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setValidConfirmPassword(e.target.value === password);
+                  if (!confirmpasswordtouch) setConfirmPasswordTouch(true);
+                }}
+                onBlur={() => setConfirmPasswordTouch(true)}
+                placeholder="Confirm your password"
+                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
+                required
+              />
+              {Showconfirmpassoword ? (<IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={() => setsshowconfirmPassword((prev) => !prev)} />) : (<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={() => setsshowconfirmPassword((prev) => !prev)} />)}
             </div>
-          
+
             {confirmpasswordtouch &&
               confirmpassword !== "" &&
               validconfirmpassword !== null && (

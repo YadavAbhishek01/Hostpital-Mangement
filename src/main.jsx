@@ -7,7 +7,7 @@ import DoctorContext, { DoctorContextProvider } from "./contextApi/DoctorContext
 createRoot(document.getElementById("root")).render(
    
   <StrictMode>
-     <BrowserRouter>
+     <BrowserRouter >
      <DoctorContextProvider>
       <App  />
   </DoctorContextProvider>

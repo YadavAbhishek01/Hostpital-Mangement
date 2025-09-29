@@ -8,14 +8,14 @@ const ContactUs = () => {
     setResult("Sending...");
 
     const formData = new FormData(event.target);
-    formData.append("access_key", "176d52e5-6d41-4b82-85d0-96c1ed8c5100");
+    formData.append("access_key", "b0e8d9f8-20d8-4596-b63e-1b9a9c5270d5");
 
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData,
     });
 
-    const data = await response.json();
+    const data = await response.json(); 
 
     if (data.success) {
       setResult("✅ Form submitted successfully!");
@@ -52,16 +52,16 @@ const ContactUs = () => {
               href="mailto:info@citycarehospital.com"
               className="text-blue-500 hover:underline"
             >
-              info@citycarehospital.com
+              info@prescriptohospital.com
             </a>
           </p>
           <p>
             Appointments:{" "}
             <a
-              href="mailto:appointments@citycarehospital.com"
+              href="prescripto-hospital.netlify.app"
               className="text-blue-500 hover:underline"
             >
-              appointments@citycarehospital.com
+              prescripto-hospital.netlify.app
             </a>
           </p>
           <p>
@@ -70,7 +70,7 @@ const ContactUs = () => {
               href="mailto:billing@citycarehospital.com"
               className="text-blue-500 hover:underline"
             >
-              billing@citycarehospital.com
+              billing@prescriptohospital.com
             </a>
           </p>
 
@@ -112,7 +112,7 @@ const ContactUs = () => {
                 name="phone"
                 type="tel"
                 maxLength={15}
-                placeholder="+1 234-567-8901"
+                placeholder="+91s 234-567-8901"
                 className="p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none"
               />
             </div>

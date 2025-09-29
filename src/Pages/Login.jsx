@@ -114,8 +114,9 @@ useEffect(() => {
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
               type="email"
+              on
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Enter your email"
+              placeholder={admin? 'emily.carter@gmail.com':'Enter Email'}
               required
             />
           </div>
@@ -127,8 +128,7 @@ useEffect(() => {
             onChange={(e)=>setPasswprd(e.target.value)}
               type="password"
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Enter your password"
-              required
+               placeholder={admin? 'admin123':'Enter Password'}
             />
             
           

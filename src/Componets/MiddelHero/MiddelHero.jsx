@@ -34,7 +34,7 @@ const MiddelHero = () => {
                 {role ? ( <NavLink to='/all-doctor'><button className="bg-white text-zinc-900 font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition w-48 mx-auto md:mx-0">
                 Book Appoinment
           </button></NavLink> ):( <NavLink to='/signup'><button className="bg-white text-zinc-900 font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition w-48 mx-auto md:mx-0">
-               create account
+               Create Account
           </button></NavLink>)}
         
         </div>

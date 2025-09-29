@@ -92,7 +92,7 @@ const Navbar = () => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 cursor-pointer">
                 {/* <CgProfile
       className="text-3xl text-sky-500 cursor-pointer hover:text-sky-600 transition"
     /> */}
@@ -107,7 +107,7 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-between px-6 py-3">
+            <div className="flex items-center justify-between px-6 py-3 cursor-pointer">
               <Link to="/" className="flex items-center gap-2">
                 <img
                   src="https://prescripto.vercel.app/assets/logo-BNCDj_dh.svg"
@@ -194,7 +194,7 @@ const Navbar = () => {
                     ))}
                   </>
                 ) : (
-                  <div>
+                  <div className="cursor-pointer">
                     <button
                       className="bg-sky-400 text-black py-1 px-6 text-sm rounded-2xl hover:bg-sky-500"
                       onClick={() => navigate("/signup")}
@@ -282,7 +282,7 @@ const Navbar = () => {
               {/* User Section */}
               {getrole === "User" ? (
                 CurrentLogin.map((user, ind) => (
-                  <div key={ind} className="flex items-center gap-3 mt-2">
+                  <div key={ind} className="flex items-center gap-3 mt-2 cursor-pointer">
                     {!user.Image ? (
                       <CgProfile
                         onClick={() => settoggel((prev) => !prev)}

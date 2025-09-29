@@ -32,20 +32,25 @@ const Profilepage = () => {
    
 
 
-    <div className="flex-1 flex flex-col gap-4">
+    <div className="flex-1 flex flex-col gap-4 w-[100%]">
       {currentuserprofileData.map((user, id) => (
         <div key={id} className="bg-white p-4 rounded-lg shadow-md w-full">
        
         <div className="flex-shrink-0">
       <img src={user.Image} alt=""  className='rounded-full w-20'/>
     </div>
-          <h1 className="text-2xl font-bold text-gray-700">{user.FullName}</h1>
+          <h1 className="text-2xl font-bold text-gray-700 capitalize">{user.FullName}</h1>
           <p className="text-gray-500">{user.Email}</p>
 
 
           <div className="mt-2 text-gray-600 flex justify-between flex-col gap-3" >
             <p className='capitalize flex items-center '><FaLocationDot className='text-red-500 text-2xl mr-2'/>{user.Address} </p>
-            <p className='flex items-center justify-centers'><FaPhoneAlt className='text-2xl mr-2'/>{user.Phone}</p>
+            <div className='flex items-center'>
+              <FaPhoneAlt className='text-xl mr-2'/>
+                {user.Phone.length===10 ? <span className=''>+91-</span> :''}
+            <p className='flex items-center justify-centers'>{user.Phone}</p>
+            </div>
+          
           </div>
 
         

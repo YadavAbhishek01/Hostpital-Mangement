@@ -12,9 +12,9 @@ const Doctor = () => {
 
 
   return (
-    <div className="px-4 md:px-12 py-8 mt-10">
+    <div className="px-4 md:px-12 py-8 ">
       
-      {location.pathname==="/all-doctor" ? '' :(  <div className="text-center mb-10">
+      {location.pathname==="/all-doctor" ? '' :(  <div className="text-center ">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Top Doctors to Book</h1>
         <p className="text-gray-600 mt-2 text-sm md:text-base">
           Simply browse through our extensive list of trusted doctors.
@@ -62,7 +62,7 @@ const Doctor = () => {
           doctordata?.slice(0,8).map((doctor, i) => (
           <div 
             key={i} 
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 mt-20 overflow-hidden"
           >
               <div className='flex items-center justify-center'>
               <img 

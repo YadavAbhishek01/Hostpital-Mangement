@@ -33,7 +33,7 @@ const DoctorList = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-[100%]  h-100 object-cover bg-gray-100 hover:shadow-xl transform-3d"
+              className=" w-[100%] h-80 object-cover bg-gray-100 hover:shadow-xl transform-3d"
             />
           
          

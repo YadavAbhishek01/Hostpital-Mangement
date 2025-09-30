@@ -75,11 +75,11 @@ const AllDoctorDetails = () => {
                 navigator(`/appoinment/${item.id}`);
               }}
             >
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center p-1">
                  <img
                 src={item.image}
                 alt={item.name}
-                className="w-[70%] object-cover bg-gray-100 rounded-full "
+                className="w-[70%]  object-cover bg-gray-100 rounded-full "
               />
               </div>
               <div className="p-4 text-center ">

@@ -27,7 +27,7 @@ const Specialist = () => {
   ];
 
   return (
-    <div className="px-6 md:px-20 py-10 mt-10">
+    <div className="px-6 md:px-20 py-10 ">
 
       <div className="text-center mb-4">
         <h3 className="text-3xl font-semibold text-gray-800">Find by Speciality</h3>

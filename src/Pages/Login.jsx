@@ -44,7 +44,7 @@ useEffect(() => {
       
         if(!localData)
         {
-          toast.error("Email or Password not found please register!!")
+          message.error("Email or Password not found please register!!")
         }
        const user= localData.find((data)=>data.Email=== email  && data.Password===passsword)
        
@@ -86,12 +86,12 @@ useEffect(() => {
          else
          {
             setError(true);
-             toast.error("Invalid Credetials")
+             message.error("Invalid Credetials")
          }
           
       }
         else{
-          toast.error("Invalid Credetials")
+          message.error("Invalid Credetials")
           
         }
 

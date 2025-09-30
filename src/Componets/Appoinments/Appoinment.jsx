@@ -12,9 +12,7 @@ const Appoinment = ({ filderdata, Fees }) => {
   const [Patientsname, setPatientsName] = useState(null);
   const [Signupdata, setSignUpData] = useState([]);
   const [timer,settimer]=useState([])
-  const timeslot = [
-  "9:00"
-  ];
+
 
  
   const [appoinment, setAppoinment] = useState(() =>

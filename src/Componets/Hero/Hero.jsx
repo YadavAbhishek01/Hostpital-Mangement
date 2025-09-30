@@ -32,7 +32,7 @@ const [roledata,setRoleData]=useState(null)
     }
   return (
 
-    <div className="px-4 md:px-18 h-full ">
+    <div className="px-4 md:px-18 h-full  ">
       <div className="container mx-auto bg-sky-500 rounded-lg flex flex-col md:flex-row items-center gap-8">
         
       

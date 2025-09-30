@@ -111,13 +111,12 @@ const Navbar = () => {
                 {/* <CgProfile
       className="text-3xl text-sky-500 cursor-pointer hover:text-sky-600 transition"
     /> */}
-                <img src={admindata.image} alt="" className="w-10" />
-                <p className="text-gray-500">{admindata.name}</p>
+                <img src={admindata.image} alt="" className="w-8" />
+                <p className="text-gray-500 text-xs flex w-full">{admindata.name}</p>
                 <button
                   className="bg-sky-500 px-5 py-1 rounded-2xl text-white hover:bg-red-500  cursor-pointer"
                   onClick={handleLogout}
-                >
-                  Logout
+                >Logout
                 </button>
               </div>
             </div>
@@ -310,7 +309,7 @@ const Navbar = () => {
                       <img
                         src={user.Image}
                         alt="Profile"
-                        className="w-12 h-12 rounded-full border border-gray-300 cursor-pointer hover:scale-105 transition"
+                        className="w-8 h-12 rounded-full border border-gray-300 cursor-pointer hover:scale-105 transition"
                         onClick={() => settoggel((prev) => !prev)}
                       />
                     )}

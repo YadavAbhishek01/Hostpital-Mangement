@@ -11,7 +11,7 @@ const DoctorDetails = () => {
 
   useEffect(() => {
     const filterData = doctordata.filter(
-      (doc) => Number(doc.id) === Number(id)
+      (doc) =>doc.id === id
     );
     setDoctorData(filterData);
   }, []);

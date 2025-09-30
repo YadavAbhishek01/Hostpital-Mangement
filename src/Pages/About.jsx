@@ -2,6 +2,7 @@ import React from "react";
 import { FaClock, FaShieldAlt, FaUserFriends } from "react-icons/fa";
 
 const About = () => {
+  
   return (
     <div className="container mx-auto px-4  space-y-10 ">
 

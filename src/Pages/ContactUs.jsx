@@ -25,6 +25,7 @@ const ContactUs = () => {
       setResult("❌ " + data.message);
     }
   };
+ 
 
   return (
     <div className="px-6 py-10 max-w-6xl mx-auto bg-zinc-50 ">
@@ -111,8 +112,8 @@ const ContactUs = () => {
               <input
                 name="phone"
                 type="tel"
-                maxLength={15}
-                placeholder="+91s 234-567-8901"
+                maxLength={10}
+                placeholder="+91 234-567-8901"
                 className="p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none"
               />
             </div>

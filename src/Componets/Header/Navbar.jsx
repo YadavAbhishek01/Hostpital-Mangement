@@ -112,7 +112,7 @@ const Navbar = () => {
       className="text-3xl text-sky-500 cursor-pointer hover:text-sky-600 transition"
     /> */}
                 <img src={admindata.image} alt="" className="w-8" />
-                <p className="text-gray-500 text-xs flex w-full">{admindata.name}</p>
+                <p className="text-gray-500 text-xs flex w-full whitespace-nowrap">{admindata.name}</p>
                 <button
                   className="bg-sky-500 px-5 py-1 rounded-2xl text-white hover:bg-red-500  cursor-pointer"
                   onClick={handleLogout}
@@ -126,7 +126,7 @@ const Navbar = () => {
                 <img
                   src="https://prescripto.vercel.app/assets/logo-BNCDj_dh.svg"
                   alt="logo"
-                  className="h-8"
+                  className="h-8  "
                 />
               </Link>
 
@@ -147,7 +147,7 @@ const Navbar = () => {
                   to="/all-doctor"
                   
                   className={({ isActive }) =>
-                    `px-3 py-1 rounded-lg font-medium transition ${
+                    `px-3 py-1 rounded-lg font-medium whitespace-nowrap transition ${
                       isActive
                         ? "text-white bg-sky-500"
                         : "text-gray-600 hover:text-sky-500"
@@ -172,7 +172,7 @@ const Navbar = () => {
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
-                    `px-3 py-1 rounded-lg font-medium transition ${
+                    `px-3 py-1 rounded-lg font-medium  whitespace-nowrap transition ${
                       isActive
                         ? "text-white bg-sky-500"
                         : "text-gray-600 hover:text-sky-500"
@@ -210,15 +210,15 @@ const Navbar = () => {
                     ))}
                   </>
                 ) : (
-                  <div className="cursor-pointer">
+                  <div className="cursor-pointer  whitespace-nowrap">
                     <button
-                      className="bg-sky-400 text-black py-1 px-6 text-sm rounded-2xl hover:bg-sky-500"
+                      className="bg-sky-400 text-black py-1 px-6 text-sm rounded-2xl  hover:bg-sky-500"
                       onClick={() => navigate("/signup")}
                     >
                       Create Account
                     </button>
                     <button
-                      className="bg-zinc-200 text-black py-1 px-6 text-sm rounded-xl ml-3 hover:bg-zinc-100"
+                      className="bg-zinc-200 text-black py-1 px-6 text-sm rounded-xl ml-3  hover:bg-zinc-100"
                       onClick={() => navigate(`/login/${Admin}`)}
                     >
                       Admin Dashboard

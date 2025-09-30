@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import DoctorContext from "../contextApi/DoctorContext";
 import { useNavigate } from "react-router-dom";
 
+
 const AllDoctorDetails = () => {
   const { doctordata = [] } = useContext(DoctorContext);
 
@@ -11,6 +12,7 @@ const AllDoctorDetails = () => {
 
 
   const filteredData = useMemo(() => {
+
     if (!specialty) return doctordata;
     return doctordata.filter((doc) => doc.specialty === specialty);
   }, [doctordata, specialty]);

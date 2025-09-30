@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import DoctorContext from "../../contextApi/DoctorContext";
-
+import { message } from "antd";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 const AddDoctor = () => {
@@ -22,6 +22,7 @@ const AddDoctor = () => {
     const phoneregex=/^[6-9]\d{9}$/
 
     useEffect(() => {
+      
   const stored = JSON.parse(localStorage.getItem("DoctorData"));
 
   if (stored && stored.length > 0) {
@@ -63,7 +64,7 @@ const AddDoctor = () => {
        setSpeciality('')
        setStatus('')
 
-       toast.success("Doctor added")
+       message.success("Doctor added")
     }
     const handlerimage=(e)=>{
         const file=e.target.files[0];

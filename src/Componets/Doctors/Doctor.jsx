@@ -1,16 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DoctorContext from "../../contextApi/DoctorContext";
 import { useNavigate } from 'react-router-dom';
-import { MoonLoader } from 'react-spinners';
+import { ClipLoader, MoonLoader } from 'react-spinners';
 
 
 const Doctor = () => {
   const { doctordata = [] } = useContext(DoctorContext);
+  const [isloader,setLoader]=useState(false)
   const navigate=useNavigate()
 // const doctordata=JSON.parse(localStorage.getItem("DoctorData"))
 
 
 
+const handleview=()=>{
+      setLoader(true)
+      setTimeout(() => {
+          navigate('/all-doctor')
+      }, 2000);
+}
   return (
     <div className="px-4 md:px-12 py-2 ">
       
@@ -97,9 +104,9 @@ const Doctor = () => {
        
       
       </div>
-      {location.pathname==='/all-doctor' ? '' :( <div className='flex items-center justify-center  mt-10'>
-       <button className='bg-sky-300 py-2 px-5 rounded-2xl  mb-3 cursor-pointer' onClick={()=>navigate("/all-doctor")}>View All Doctors</button>
-      </div>) }
+      <div className='flex items-center justify-center  mt-10'>
+       <button className='bg-sky-300 py-2 px-5 rounded-2xl  mb-3 cursor-pointer' onClick={handleview}>{isloader ?  <ClipLoader color="#2724ff"/>:" View All Doctors"}</button>
+      </div>
      
     </div>
   )

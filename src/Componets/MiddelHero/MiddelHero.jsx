@@ -7,7 +7,7 @@ const MiddelHero = () => {
         setRole(user)
     },[])
   return (
-    <div className="px-4 md:px-18 h-full  mt-10">
+    <div className="px-4 md:px-18 h-full  ">
       <div className="container relative mx-auto bg-sky-500 rounded-lg p-6 md:p-12 flex flex-col md:flex-row items-center gap-8 overflow-hidden">
         
         {/* Left Content */}

@@ -12,11 +12,11 @@ const Doctor = () => {
 
 
   return (
-    <div className="px-4 md:px-12 py-8 ">
+    <div className="px-4 md:px-12 py-2 ">
       
       {location.pathname==="/all-doctor" ? '' :(  <div className="text-center ">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Top Doctors to Book</h1>
-        <p className="text-gray-600 mt-2 text-sm md:text-base">
+        <p className="text-gray-600 mt-2 text-sm md:text-base mb-5">
           Simply browse through our extensive list of trusted doctors.
         </p>
       </div>)}
@@ -62,7 +62,7 @@ const Doctor = () => {
           doctordata?.slice(0,8).map((doctor, i) => (
           <div 
             key={i} 
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 mt-20 overflow-hidden"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300  overflow-hidden"
           >
               <div className='flex items-center justify-center'>
               <img 
@@ -98,7 +98,7 @@ const Doctor = () => {
       
       </div>
       {location.pathname==='/all-doctor' ? '' :( <div className='flex items-center justify-center  mt-10'>
-       <button className='bg-sky-300 py-2 px-5 rounded-2xl  cursor-pointer' onClick={()=>navigate("/all-doctor")}>View All Doctors</button>
+       <button className='bg-sky-300 py-2 px-5 rounded-2xl  mb-3 cursor-pointer' onClick={()=>navigate("/all-doctor")}>View All Doctors</button>
       </div>) }
      
     </div>

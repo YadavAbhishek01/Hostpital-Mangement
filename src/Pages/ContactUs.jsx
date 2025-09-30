@@ -27,7 +27,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="px-6 py-10 max-w-6xl mx-auto bg-zinc-50 mt-10">
+    <div className="px-6 py-10 max-w-6xl mx-auto bg-zinc-50 ">
       <div className="grid md:grid-cols-2 gap-8 mb-12">
  
         <div className="space-y-6 bg-white shadow-lg rounded-2xl p-6">

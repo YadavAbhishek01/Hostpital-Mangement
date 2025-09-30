@@ -3,7 +3,7 @@ import { FaClock, FaShieldAlt, FaUserFriends } from "react-icons/fa";
 
 const About = () => {
   return (
-    <div className="container mx-auto px-4 py-12 space-y-20 mt-10">
+    <div className="container mx-auto px-4  space-y-10 ">
 
    
       <div className="text-center space-y-4">

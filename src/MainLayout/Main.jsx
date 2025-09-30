@@ -8,7 +8,7 @@ const Main = () => {
   const admin = JSON.parse(localStorage.getItem("role"));
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       {/* Navbar fixed at top */}
       <Navbar />
 

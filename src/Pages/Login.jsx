@@ -53,7 +53,7 @@ useEffect(() => {
         {
           
           
-            toast.success("Succefully login")
+            message.success("Succefully login")
         
             localStorage.setItem("role",JSON.stringify("User"))
             setRole("User")
@@ -114,7 +114,7 @@ useEffect(() => {
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
               type="email"
-              on
+              
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
               placeholder={admin? 'emily.carter@gmail.com':'Enter Email'}
               required

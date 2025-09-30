@@ -11,8 +11,6 @@ import AllDoctorDetails from "./Pages/AllDoctorDetails";
 import DoctorDetails from "./Pages/DoctorDetails";
 import MyAppoinments from "./Pages/MyAppoinments";
 import EditProfile from "./Pages/EditProfile";
-
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DoctorList from "./Admin/pages/DoctorList";
 import Hero from "./Admin/Componets/Hero/Hero";
@@ -24,16 +22,14 @@ import Dashboard from "./Admin/Componets/Hero/Hero";
 
 
 
+
 function App() {
-
-
-  
   return (
  <>
- <ToastContainer position="top-center" autoClose={3000} />
+
    
     <Routes>
-     
+    
       <Route path="/" element={<Main />} >
 
           <Route index element={<Home />} />

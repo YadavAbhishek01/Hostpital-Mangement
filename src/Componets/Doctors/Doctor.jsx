@@ -25,17 +25,19 @@ const Doctor = () => {
  
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  "   onClick={()=>navigate('/all-doctor')}>
         {doctordata.length===0 ?"not Doctor Availabel":''}
-        {location.pathname==="/all-doctor" ?   doctordata?.map((doctor, i) => (
+        {/* {location.pathname==="/all-doctor" ?   doctordata?.map((doctor, i) => (
           <div 
             key={i} 
             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
          >
-      
-            <img 
+             <div className='flex items-center justify-center'>
+              <img 
               src={doctor.image} 
               alt={doctor.name} 
-              className="w-full  bg-sky-200 object-center"
+              className="w-[70%]  bg-sky-200 object-center rounded-full "
             />
+              </div>
+            
 
       
             <div className="p-4 text-center">
@@ -56,20 +58,23 @@ const Doctor = () => {
               </span>
             </div>
           </div>
-        )):   doctordata?.slice(0,8).map((doctor, i) => (
+        )):   */
+          doctordata?.slice(0,8).map((doctor, i) => (
           <div 
             key={i} 
             className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
           >
-     
-            <img 
+              <div className='flex items-center justify-center'>
+              <img 
               src={doctor.image} 
               alt={doctor.name} 
-              className="w-full  bg-sky-200 object-center"
+              className="w-[70%]  bg-gray-100 object-center rounded-full "
             />
+              </div>
+        
 
          
-            <div className="p-4 text-center">
+            <div className="p-4 text-center ">
               <h2 className="text-lg font-semibold text-gray-800">{doctor.name}</h2>
               <p className="text-sm text-indigo-600 font-medium">{doctor.specialty}</p>
               <p className="text-gray-500 text-sm mt-1">{doctor.experience}</p>
@@ -87,7 +92,9 @@ const Doctor = () => {
               </span>
             </div>
           </div>
-        ))}
+        ))
+        }
+       
       
       </div>
       {location.pathname==='/all-doctor' ? '' :( <div className='flex items-center justify-center  mt-10'>

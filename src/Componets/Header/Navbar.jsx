@@ -3,8 +3,13 @@ import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { toast } from "react-toastify";
+import DraggableDialog from "../DraggableDialog";
+
+
+        
 const Navbar = () => {
   const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [getrole, setRole] = useState("");
   const [toggel, settoggel] = useState(false);
@@ -41,29 +46,39 @@ const Navbar = () => {
     setAdminName(JSON.parse(localStorage.getItem("Admin")));
   }, []);
 
-  const handleLogout = () => {
-    if (CurrentAdmin) {
+   const confirmLogout=()=>{
+           if (CurrentAdmin) {
       toast.success("logout succefully");
       localStorage.removeItem("role");
       localStorage.removeItem("Admin");
       localStorage.removeItem("LoginUser");
-      setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   navigate("/");
+      //   window.location.reload();
+      // }, 1000);
        setMenuOpen(false);
     } else {
       toast.success("logout succefully");
       localStorage.removeItem("role");
       localStorage.removeItem("LoginUser");
-      setTimeout(() => {
+     
+    }
+    setOpen(false)
+     setTimeout(() => {
         navigate("/");
         window.location.reload();
       }, 1000);
     }
+  const handleLogout = () => {
+    setOpen(true)
+    
+   
+   
+   
   };
 
   const handleappoinment = () => {
+  
     navigate("my-appoinment");
      setMenuOpen(false);
   };
@@ -131,6 +146,7 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink
                   to="/all-doctor"
+                  
                   className={({ isActive }) =>
                     `px-3 py-1 rounded-lg font-medium transition ${
                       isActive
@@ -138,6 +154,7 @@ const Navbar = () => {
                         : "text-gray-600 hover:text-sky-500"
                     }`
                   }
+                
                 >
                   All Doctor
                 </NavLink>
@@ -187,7 +204,7 @@ const Navbar = () => {
                           />
                         )}
 
-                        <p className=" flex items-center justify-center gap-2">
+                        <p className=" flex items-center justify-center gap-2 capitalize">
                           👋 {user.FullName}
                         </p>
                       </div>
@@ -210,11 +227,12 @@ const Navbar = () => {
                   </div>
                 )}
                 {toggel && (
-                  <div className="absolute top-12 right-20 w-40 bg-white shadow-lg rounded-md border border-gray-200 flex flex-col text-sm z-10">
+                  <div className="absolute top-12 right-20 w-40 bg-white shadow-lg rounded-md border border-gray-200 flex flex-col text-sm z-10" onClick={()=>  settoggel((prev)=>!prev)}>
                     <p
                       className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       onClick={() => {
                         navigate("/profile");
+                        
                       }}
                     >
                       My Profile
@@ -349,6 +367,13 @@ const Navbar = () => {
           )}
         </nav>
       </div>
+      {<DraggableDialog
+     open={open}
+        onClose={() => setOpen(false)}
+        onConfirm={confirmLogout}
+        title="Logout Confirmation"
+        message="Are you sure you want to Logout?"
+     submitBtn={"Logout"} />}
     </>
   );
 };

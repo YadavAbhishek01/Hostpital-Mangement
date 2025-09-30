@@ -7,12 +7,15 @@ import MiddelHero from "../Componets/MiddelHero/MiddelHero";
 import Sidebar from "../Admin/Componets/Sidebar/Sidebar";
 import DoctorList from "../Admin/pages/DoctorList";
 import Dashboard from "../Admin/Componets/Hero/Hero";
+import DraggableDialog from "../Componets/DraggableDialog";
+
 
 const Home = () => {
   const admin = JSON.parse(localStorage.getItem("role"));
 
   return (
     <div className="min-h-screen bg-Zinc-400 mt-10">
+        <DraggableDialog/>
       {admin === "Admin" ? (
         <div className="flex">
           <main className="flex-1 p-6 bg-white">

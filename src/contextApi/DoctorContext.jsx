@@ -65,7 +65,7 @@ export const DoctorContextProvider = ({ children }) => {
   const isLoading = loadingDoctors || loadingAdmins;
 
   return (
-    <DoctorContext.Provider value={{ doctordata, Admindata, setDoctorData }}>
+    <DoctorContext.Provider value={{ doctordata, Admindata, isLoading }}>
       {isLoading ? (
         <div className="flex w-full items-center justify-center h-screen">
           <MoonLoader size={50} color="#0ea5e9" />

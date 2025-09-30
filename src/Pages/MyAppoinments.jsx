@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import DraggableDialog from '../Componets/DraggableDialog'
 
 const MyAppoinments = () => {
   const [appoinmentdata, setAppoinmentData] = useState([])
   const [Loginuser,setLoginUser]=useState([])
-
+  const[open,setOpen]=useState(false)
+  const[deleteId,setDeleteId]=useState("")
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('Appoinments'))||[]
     setAppoinmentData(data)
@@ -16,17 +18,17 @@ const MyAppoinments = () => {
     console.log(loginuserdata)
     },[])
 
-    const hadlecancel=(index)=>{
-        if(window.confirm("YOu want to cancel this Appoinments"))
-        {
-            const updatedata= appoinmentdata.filter((doc)=>doc.id!==index)
+    const DeleteAppointment=()=>{
+      
+         const updatedata= appoinmentdata.filter((doc)=>doc.id!==deleteId)
        setAppoinmentData(updatedata)
        localStorage.setItem("Appoinments",JSON.stringify(updatedata))
-        }
-        else{
-          return null
-        }
-     
+    }
+    const hadlecancel=(index)=>{
+    
+           setOpen(true)
+           setDeleteId(index)
+          
     }
 
     const currentuserappointment=appoinmentdata.filter((user)=>user.Patient_details.Email===Loginuser)
@@ -60,9 +62,20 @@ const MyAppoinments = () => {
               Cancel
             </button>
           </div>
+              
         ))}
+          
+      
       </div>
+         <DraggableDialog
+        open={open}
+           onClose={() => setOpen(false)}
+           onConfirm={DeleteAppointment}
+           title="Delete Confirmation"
+           message="Are you sure you want to Delete this Appointment?"
+        submitBtn={"OK"} />
     </div>
+   
   )
 }
 

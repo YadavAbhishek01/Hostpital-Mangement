@@ -7,8 +7,7 @@ import adminrouter from './routes/adminroute.js'
 import loginroutes from './routes/userroutes.js'
 import publicroute from './routes/publicroute.js'
 import appointmentrouter from './routes/appointmentsroutes.js'
-// import signuproutes from './routes/signuproutes.js'
-// import authrouter from './routes/loginroutes.js'
+
 
 // app config
 const app = express()

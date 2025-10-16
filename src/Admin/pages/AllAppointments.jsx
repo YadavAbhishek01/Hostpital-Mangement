@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DraggableDialog from "../../Componets/DraggableDialog";
+import axios from "axios";
+import { message } from "antd";
 
 const AllAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -7,15 +9,37 @@ const AllAppointments = () => {
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
-    const appoint = JSON.parse(localStorage.getItem("Appoinments")) || [];
-    setAppointments(appoint);
+    const getAppointments = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/appointments/");
+        const data = res.data.appointments || res.data || [];
+        setAppointments(data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        setAppointments([]);
+      }
+    };
+    getAppointments();
   }, []);
 
-  const DeleteAppointment = () => {
-    const cancelappoin = appointments.filter((doc) => doc.id !== deleteId);
-    setAppointments(cancelappoin);
-    localStorage.setItem("Appoinments", JSON.stringify(cancelappoin));
+  const deleteAppointment = async () => {
+    if (!deleteId) return;
+    try {
+      const res = await axios.delete(
+        `http://localhost:5000/api/appointments/delete-appointment/${deleteId}`
+      );
+      if (res.data.success) {
+        message.success("Appointment deleted");
+        setAppointments((prev) => prev.filter((a) => a._id !== deleteId));
+      } else {
+        message.error("Failed to delete appointment");
+      }
+    } catch (err) {
+      console.error("Delete failed:", err);
+      message.error("Server error while deleting appointment");
+    }
     setOpen(false);
+    setDeleteId(null);
   };
 
   const handleCancel = (id) => {
@@ -25,22 +49,13 @@ const AllAppointments = () => {
 
   return (
     <div className="p-4 sm:p-6">
-      {/* Title */}
-      <div className="flex items-center justify-center gap-3 flex-wrap text-center">
-        <img
-          src="https://img.icons8.com/?size=100&id=QTADNrdh5I0o&format=png&color=000000"
-          alt=""
-          className="w-8"
-        />
-        <h1 className="text-xl sm:text-2xl font-semibold text-gray-700 mt-2">
-          All Appointments
-        </h1>
-      </div>
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+        All Appointments
+      </h1>
 
-      {/* Table / List */}
-      <div className="overflow-hidden rounded-lg shadow-md mt-6">
-        {/* Desktop Table Header */}
-        <div className="hidden md:grid grid-cols-7 text-sm font-semibold text-gray-600 bg-gray-100 px-4 py-3">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-hidden rounded-lg shadow-md">
+        <div className="grid grid-cols-7 bg-gray-100 px-4 py-3 text-gray-600 font-semibold text-sm rounded-t-lg">
           <p>#</p>
           <p>Patient Name</p>
           <p>Age</p>
@@ -51,96 +66,72 @@ const AllAppointments = () => {
         </div>
 
         {appointments.length > 0 ? (
-          <div className="divide-y">
-            {appointments
-              .slice()
-              .reverse()
-              .map((doc, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-1 md:grid-cols-7 items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+          appointments.map((item, i) => (
+            <div
+              key={item._id}
+              className="grid grid-cols-7 items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition border-b"
+            >
+              <p>{i + 1}</p>
+              <p className="capitalize">{item.Patient_details?.patientsname || "-"}</p>
+              <p>{item.Patient_details?.age || "-"}</p>
+              <p>
+                {item.date ? new Date(item.date).toLocaleDateString() : "-"}{" "}
+                <span>{item.time || ""}</span>
+              </p>
+              <p>{item.doctorname || "-"}</p>
+              <p className="text-green-600 font-semibold">${item.fees || "0"}</p>
+              <div className="flex justify-center">
+                <button
+                  className="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
+                  onClick={() => handleCancel(item._id)}
                 >
-                  {/* Mobile Card Style */}
-                  <div className="md:hidden space-y-2">
-                    <p className="font-medium">
-                      <span className="font-semibold">Patient:</span>{" "}
-                      {doc.Patient_details?.PatientsName}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Age:</span>{" "}
-                      {doc.Patient_details?.Age || "-"}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Date & Time:</span>{" "}
-                      {doc.Date}{" "}
-                      <span className="text-gray-500">{doc.Time}</span>
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={doc.image}
-                        alt=""
-                        className="w-10 rounded-full"
-                      />
-                      <p className="text-xs">{doc.name}</p>
-                    </div>
-                    <p className="text-green-600 font-semibold text-xs">
-                      ${doc.Fees || "0"}
-                    </p>
-                    <button
-                      className="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
-                      onClick={() => handleCancel(doc.id)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-
-                  {/* Desktop Table Cells */}
-                  <p className="hidden md:block font-medium">{i + 1}</p>
-                  <p className="hidden md:block">
-                    {doc.Patient_details?.PatientsName}
-                  </p>
-                  <p className="hidden md:block">
-                    {doc.Patient_details?.Age || "-"}
-                  </p>
-                  <p className="hidden md:block">
-                    {doc.Date}{" "}
-                    <span className="text-gray-500">{doc.Time}</span>
-                  </p>
-                  <div className="hidden md:flex items-center justify-center flex-col">
-                    <img src={doc.image} alt="" className="w-10 rounded-full" />
-                    <p className="text-xs">{doc.name}</p>
-                  </div>
-                  <p className="hidden md:block text-green-600 font-semibold text-xs">
-                    ${doc.Fees || "0"}
-                  </p>
-                  <div className="hidden md:flex justify-center">
-                    <button
-                      className="px-3 py-1 text-xs rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"
-                      onClick={() => handleCancel(doc.id)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ))}
-          </div>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ))
         ) : (
-          <div className="text-center py-8 bg-gray-50 text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <img
-              src="https://img.icons8.com/?size=100&id=igRGF9zPpSqN&format=png&color=000000"
-              alt=""
-              className="w-8"
-            />
-            <p>No appointments available</p>
+          <div className="text-center py-8 bg-gray-50 text-gray-500">
+            No appointments available
           </div>
         )}
       </div>
 
-      {/* Delete Confirmation Dialog */}
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {appointments.length > 0 ? (
+          appointments.map((item, i) => (
+            <div
+              key={item._id}
+              className="bg-white rounded-lg shadow-md p-4 space-y-2 hover:shadow-lg transition"
+            >
+              <div className="flex justify-between items-center">
+                <h2 className="font-semibold text-gray-700">{item.Patient_details?.patientsname || "-"}</h2>
+                <span className="text-sm text-gray-500">{item.date ? new Date(item.date).toLocaleDateString() : "-"} {item.time || ""}</span>
+              </div>
+              <p><span className="font-medium">Age:</span> {item.Patient_details?.age || "-"}</p>
+              <p><span className="font-medium">Doctor:</span> {item.doctorname || "-"}</p>
+              <p><span className="font-medium text-green-600">Fees:</span> ${item.fees || "0"}</p>
+              <button
+                className="w-full mt-2 bg-red-100 text-red-600 px-3 py-2 rounded-lg hover:bg-red-200 transition"
+                onClick={() => handleCancel(item._id)}
+              >
+                Cancel
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-8 bg-gray-50 text-gray-500">
+            No appointments available
+          </div>
+        )}
+      </div>
+
+      {/* Delete Dialog */}
       <DraggableDialog
         open={open}
         onClose={() => setOpen(false)}
-        onConfirm={DeleteAppointment}
+        onConfirm={deleteAppointment}
         title="Delete Confirmation"
         message="Are you sure you want to delete this appointment?"
         submitBtn={"OK"}

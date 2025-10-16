@@ -3,20 +3,52 @@ import { FaUserDoctor } from "react-icons/fa6";
 import { FaBook } from "react-icons/fa";
 import { FcBusinessman, FcAdvertising } from "react-icons/fc";
 import DoctorContext from "../../../contextApi/DoctorContext";
+import axios from "axios";
+import {message} from 'antd'
+import { MoonLoader } from "react-spinners";
 // import '../Hero/hero.css'
 const Dashboard = () => {
   const [appointments, setAppointments] = useState([]);
-  // const { doctordata } = useContext(DoctorContext);
-const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
+     const { backendUrl, admintoken } = useContext(DoctorContext);
+  const[activedoc,setActiveDoc]=useState([])
 
 
-  
-  useEffect(() => {
-    const appoint = JSON.parse(localStorage.getItem("Appoinments")) || [];
-    setAppointments(appoint);
-  }, []);
+  useEffect(()=>{
+            const fetchdata=async(req,res)=>{
+              try{
+        
+                  const {data}=await axios.get('http://localhost:5000/api/admin/all-doctors',{headers :{admintoken}})
 
-  const activedoctor = doctordata.filter((doc) => doc.isActive);
+                if(data.success)
+                {
+                  
+                    const docsdata=data.doctors
+                    const filterdata=docsdata.filter((doc)=>doc.available)
+                    setActiveDoc(filterdata)
+                    
+                
+                }
+                 else{
+                        message.error(data.message || "Failed to fetch doctors")
+                        }
+              }
+              catch(error)
+              {
+                console.log("Fetching Eroor",error)
+                message.error("Server error while fetching doctors");
+              }
+                
+            }
+            const getappoint=async()=>{
+                const res=await axios.get('http://localhost:5000/api/appointments/')
+                console.log(res.data.appointments)
+                setAppointments(res.data.appointments)
+            }
+             const alldata = appointments.filter((doc) => doc.isActive);
+            fetchdata()
+            getappoint()
+  },[backendUrl,admintoken])
+ 
 
   return (
     <div className="w-full  bg-sky-200 px-6 py-6 hero">
@@ -27,8 +59,8 @@ const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
           <FaUserDoctor className="text-sky-500 text-6xl mb-3" />
           <h1 className="font-semibold text-lg text-gray-700">Active Doctors</h1>
           <p className="absolute top-6 right-6 text-3xl font-bold text-sky-700">
-            {activedoctor.length}
-          </p>
+            {activedoc.length}
+          </p>  
         </div>
 
         {/* Appointments */}
@@ -67,14 +99,14 @@ const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
                 className="flex items-center gap-4 p-4 hover:bg-gray-50 transition"
               >
                 <img
-                  src={doc.image}
+                  src={doc.image?doc.image :'https://img.icons8.com/color/48/tear-off-calendar--v1.png'}
                   alt={doc.name}
                   className="w-16 h-16 rounded-full border shadow-sm"
                 />
                 <div>
-                  <p className="font-semibold text-gray-700">{doc.name}</p>
+                  <p className="font-semibold text-gray-700">{doc.doctorname}</p>
                   <p className="text-sm text-gray-500">
-                    Booking Date: <span className="font-medium">{doc.Date}</span>
+                    Booking Date: <span className="font-medium">{doc.date? new Date(doc.date).toLocaleDateString():''}</span>
                   </p>
                 </div>
               </div>
@@ -90,6 +122,7 @@ const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
         
         )}
       </div>
+ 
     </div>
   );
 };

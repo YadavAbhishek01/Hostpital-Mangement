@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Appoinment from "../Componets/Appoinments/Appoinment";
-
+// import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 const DoctorDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  // console.log(id)
   const [doctorData, setDoctorData] = useState([]);
 
-  const doctordata = JSON.parse(localStorage.getItem("DoctorData")) || [];
+
 
   useEffect(() => {
-    const filterData = doctordata.filter(
-      (doc) =>doc.id === id
-    );
-    setDoctorData(filterData);
+
+    const fetchdoctor = async () => {
+      try {
+        const { data } = await axiosInstance.get('/public/doctors')
+
+        if (data.success) {
+
+          const docdata = data.doctors
+
+          const filterdata = docdata.filter((doc) => doc._id === id)
+          setDoctorData(filterdata)
+        }
+        else {
+          message.error(data.message, "fetching error")
+        }
+      }
+
+
+      catch (error) {
+        console.log(error)
+
+      }
+    }
+    fetchdoctor()
+
   }, []);
 
   const Appointmentsfess = doctorData.map((doc) => doc.appointmentFees);
@@ -44,7 +67,7 @@ const DoctorDetails = () => {
                     {doc.name}
                   </h2>
                   <p className="text-indigo-600 font-semibold text-lg">
-                    {doc.specialty}
+                    {doc.speciality}
                   </p>
                   <p className="text-gray-500 mt-1">
                     {doc.experience} Experience
@@ -57,17 +80,16 @@ const DoctorDetails = () => {
                   <p className="text-gray-800 font-bold">
                     Appointment Fee:{" "}
                     <span className="text-indigo-600">
-                      ${doc.appointmentFees}
+                      ${doc.fees}
                     </span>
                   </p>
                   <div className="flex items-center justify-between">
                     <p>Doctor:</p>
                     <p
-                      className={`font-medium ${
-                        doc.isActive ? "text-green-500" : "text-red-500"
-                      }`}
+                      className={`font-medium ${doc.available ? "text-green-500" : "text-red-500"
+                        }`}
                     >
-                      {doc.isActive ? "Available" : "Not Available"}
+                      {doc.available ? "Available" : "Not Available"}
                     </p>
                   </div>
                 </div>

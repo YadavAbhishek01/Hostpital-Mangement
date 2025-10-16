@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { nanoid } from "nanoid";
-import BasicAlerts from "../Componets/Succesmessage/Alerts";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-function Signup() {
+import { message } from "antd";
+import axiosInstance from "../utils/axiosInstance";
+import DoctorContext from "../contextApi/DoctorContext";
 
+function Signup() {
+  const { backendUrl } = useContext(DoctorContext);
   const navigate = useNavigate();
-  const [signupData, setSignData] = useState([]);
+
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,8 +17,6 @@ function Signup() {
   const [Phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [Birthdate, setBirthdate] = useState("");
-  const [submit, setSubmit] = useState(false);
-
 
   const [nametouch, setNameTouch] = useState(false);
   const [emailtouch, setEmailTouch] = useState(false);
@@ -25,15 +24,14 @@ function Signup() {
   const [confirmpasswordtouch, setConfirmPasswordTouch] = useState(false);
   const [phonetouch, setPhoneTouch] = useState(false);
 
-
   const [Validname, setValidName] = useState(null);
   const [Validemail, setValidEmail] = useState(null);
   const [Validpassword, setValidPassword] = useState(null);
   const [validconfirmpassword, setValidConfirmPassword] = useState(null);
   const [ValidPhone, setValidPhone] = useState(null);
 
-  const [showpassword, setShowPassword] = useState(false)
-  const [Showconfirmpassoword, setsshowconfirmPassword] = useState(false)
+  const [showpassword, setShowPassword] = useState(false);
+  const [Showconfirmpassoword, setsshowconfirmPassword] = useState(false);
 
   const nameregex = /^[A-Za-z]+([ '-][A-Za-z]+)*$/;
   const emailregex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -41,14 +39,7 @@ function Signup() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const phoneregex = /^[6-9]\d{9}$/;
 
-  useEffect(() => {
-    const existingData = JSON.parse(localStorage.getItem("singupData")) || [];
-    setSignData(existingData);
-  }, []);
-
-  
-  // handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isvalidname = nameregex.test(fullname);
@@ -70,338 +61,307 @@ function Signup() {
       isConfirmPassword &&
       isvalidPhone
     ) {
-      const user = {
-        id: nanoid(),
-        FullName: fullname,
-        Email: email.toLowerCase(),
-        Password: password,
-        Confirm_Password: confirmpassword,
-        Phone: Phone,
-        Gender: gender,
-        Address: Address.toUpperCase(),
-        Birthdate: Birthdate,
-      };
+      try {
+        const response = await axiosInstance.post(`/user/signup`, {
+          name: fullname,
+          email: email.toLowerCase(),
+          password,
+          address: Address,
+          phone_number: Phone,
+          gender,
+          dob: Birthdate,
+        });
 
-      setSignData((prev) => {
-        const updatedData = [...prev, user];
-        localStorage.setItem("singupData", JSON.stringify(updatedData));
-        return updatedData;
-      });
+        if (response.data.success) {
+          message.success("Signup successful!");
+          navigate("/login");
 
-      toast.success("Signup Successfully!");
-      setSubmit(true);
+          setFullName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setAddress("");
+          setPhone("");
+          setGender("");
+          setBirthdate("");
 
-      // reset fields
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setAddress("");
-      setPhone("");
-      setGender("");
-      setBirthdate("");
-
-      // reset touched and validation
-      setNameTouch(false);
-      setEmailTouch(false);
-      setPasswordTouch(false);
-      setConfirmPasswordTouch(false);
-      setPhoneTouch(false);
-      setValidName(null);
-      setValidEmail(null);
-      setValidPassword(null);
-      setValidConfirmPassword(null);
-      setValidPhone(null);
-
-      navigate("/login");
+          setNameTouch(false);
+          setEmailTouch(false);
+          setPasswordTouch(false);
+          setConfirmPasswordTouch(false);
+          setPhoneTouch(false);
+          setValidName(null);
+          setValidEmail(null);
+          setValidPassword(null);
+          setValidConfirmPassword(null);
+          setValidPhone(null);
+        } else {
+          message.error(response.data.message);
+        }
+      } catch (error) {
+        console.error(error);
+        message.error("Something went wrong!");
+      }
+    } else {
+      message.error("Please fill all fields correctly!");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-        {submit && <BasicAlerts />}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white shadow-lg rounded-xl w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden">
+        {/* Left Illustration */}
+        <div className="lg:flex-1 bg-blue-100  flex-col items-center justify-center p-8 hidden lg:flex">
+          <img
+            src="https://img.icons8.com/fluency/200/doctors-bag.png"
+            alt="Signup Illustration"
+            className="mb-4"
+          />
+          <h2 className="text-3xl font-bold text-blue-700 mb-2">
+            Welcome to Prescripto
+          </h2>
+          <p className="text-gray-700 text-center">
+            Manage your healthcare easily. Connect with certified doctors, book
+            appointments instantly, and track your health records.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* Full Name */}
-          <div className="mb-4">
-            <label className="block mb-1 font-semibold">Full Name</label>
-            <input
-              type="text"
-              value={fullname}
-              onChange={(e) => {
-                setFullName(e.target.value);
-                setValidName(nameregex.test(e.target.value));
-                if (!nametouch) setNameTouch(true);
-              }}
-              onBlur={() => setNameTouch(true)}
-              placeholder="Enter your full name"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-            {nametouch && fullname !== "" && Validname !== null && (
-              Validname ? (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=63312&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-green-500">Valid Name</span>
-                </div>
-              ) : (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=11997&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-red-500">Invalid Name</span>
-                </div>
-              )
-            )}
-          </div>
-
-          {/* Email */}
-          <div className="mb-4">
-            <label className="  block mb-1 font-semibold">Email</label>
-          <div className="relative">
-              <input
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setValidEmail(emailregex.test(e.target.value));
-                if (!emailtouch) setEmailTouch(true);
-              }}
-              onBlur={() => setEmailTouch(true)}
-              placeholder="Enter your email"
-              className="  w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-           <img src=" https://img.icons8.com/?size=20&id=Ww1lcGqgduif&format=png&color=000000" alt=""  className="absolute top-3 right-2"/>
-          </div>
-            {emailtouch && email !== "" && Validemail !== null && (
-              Validemail ? (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=63312&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-green-500">Valid Email</span>
-                </div>
-              ) : (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=11997&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-red-500">Invalid Email</span>
-                </div>
-              )
-            )}
-          </div>
-
-          {/* Password */}
-          <div className="mb-4">
-            <label className="block mb-1 font-semibold">Password</label>
-            <div className="flex  flex-col text-sm">
-           
-              <span className="text-red-500">Note*</span>
-                 <span className="text-zinc-500">Password must be at least 8 characters Like:1451@Abcd</span>
-           
-            </div>
-            <div className="flex relative ">
-              <input  
-                type={showpassword ? 'text ' : 'password'}
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setValidPassword(passwordregex.test(e.target.value));
-                  if (!passwordtouch) setPasswordTouch(true);
-                }}
-                onBlur={() => setPasswordTouch(true)}
-                placeholder="Enter your password"
-                className=" relative   w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-                required
-                maxLength={16}
-              />
-
-              {showpassword ? (<IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={() => setShowPassword((prev) => !prev)} />) : (<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={() => setShowPassword((prev) => !prev)} />)}
-
-            </div>
-            {passwordtouch && password !== "" && Validpassword !== null && (
-              Validpassword ? (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=63312&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-green-500">Valid Password</span>
-                </div>
-              ) : (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=11997&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-red-500">Invalid Password</span>
-                </div>
-              )
-            )}
-          </div>
-
-          {/* Confirm Password */}
-          <div className="mb-6">
-            <label className="block mb-1 font-semibold">Confirm Password</label>
-            <div className="flex relative">
-              <input
-                type={Showconfirmpassoword ? 'text ' : 'password'}
-                value={confirmpassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                  setValidConfirmPassword(e.target.value === password);
-                  if (!confirmpasswordtouch) setConfirmPasswordTouch(true);
-                }}
-                onBlur={() => setConfirmPasswordTouch(true)}
-                placeholder="Confirm your password"
-                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-                required
-              />
-              {Showconfirmpassoword ? (<IoEyeOutline className="absolute right-2 top-2 text-2xl" onClick={() => setsshowconfirmPassword((prev) => !prev)} />) : (<IoEyeOffOutline className="absolute right-2 top-2 text-2xl" onClick={() => setsshowconfirmPassword((prev) => !prev)} />)}
-            </div>
-
-            {confirmpasswordtouch &&
-              confirmpassword !== "" &&
-              validconfirmpassword !== null && (
-                validconfirmpassword ? (
-                  <div className="flex gap-1.5 mt-2">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=63312&format=png&color=000000"
-                      className="w-5"
-                    />
-                    <span className="text-green-500">Password Match</span>
-                  </div>
-                ) : (
-                  <div className="flex gap-1.5 mt-2">
-                    <img
-                      src="https://img.icons8.com/?size=100&id=11997&format=png&color=000000"
-                      className="w-5"
-                    />
-                    <span className="text-red-500">Password Not Match</span>
-                  </div>
-                )
-              )}
-          </div>
-
-          {/* Address */}
-          <div className="mb-6">
-            <label className="block mb-1 font-semibold">Address</label>
-            <textarea
-              value={Address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Enter your address"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="mb-6">
-            <label className="block mb-1 font-semibold">Phone no:</label>
-            <input
-              type="tel"
-              value={Phone}
-              maxLength={10}
-              onChange={(e) => {
-                setPhone(e.target.value);
-                setValidPhone(phoneregex.test(e.target.value));
-                if (!phonetouch) setPhoneTouch(true);
-              }}
-              onBlur={() => setPhoneTouch(true)}
-              placeholder="91+ 1234567890"
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-            {phonetouch && Phone !== "" && ValidPhone !== null && (
-              ValidPhone ? (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=63312&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-green-500">Valid Phone Number</span>
-                </div>
-              ) : (
-                <div className="flex gap-1.5 mt-2">
-                  <img
-                    src="https://img.icons8.com/?size=100&id=11997&format=png&color=000000"
-                    className="w-5"
-                  />
-                  <span className="text-red-500">Invalid Phone Number</span>
-                </div>
-              )
-            )}
-          </div>
-
-          {/* Gender */}
-          <div className="mb-6">
-            <label className="block mb-1 font-semibold">Gender</label>
-            <div className="flex items-center space-x-6">
-              <label className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={gender === "male"}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                  required
-                />
-                <span>Male</span>
-              </label>
-
-              <label className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={gender === "female"}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                  required
-                />
-                <span>Female</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Birthdate */}
-          <div className="mb-6">
-            <label className="block mb-1 font-semibold">Birthdate</label>
-            <input
-              type="date"
-              value={Birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition"
-          >
+        {/* Right Form */}
+        <div className="lg:flex-1 p-8">
+          <h2 className="text-2xl font-bold text-center text-green-600 mb-6">
             Sign Up
-          </button>
-        </form>
+          </h2>
 
-        <p
-          onClick={() => navigate("/login")}
-          className="mt-4 text-center text-gray-500 text-sm"
-        >
-          Already have an account?{" "}
-          <span className="text-blue-500 cursor-pointer">Login</span>
-        </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Full Name */}
+            <div>
+              <label className="block mb-1 font-semibold">Full Name</label>
+              <input
+                type="text"
+                value={fullname}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  setValidName(nameregex.test(e.target.value));
+                  if (!nametouch) setNameTouch(true);
+                }}
+                onBlur={() => setNameTouch(true)}
+                placeholder="Enter your full name"
+                className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                required
+              />
+              {nametouch && fullname !== "" && Validname !== null && (
+                <span
+                  className={`text-sm mt-1 ${
+                    Validname ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {Validname ? "Valid Name" : "Invalid Name"}
+                </span>
+              )}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block mb-1 font-semibold">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setValidEmail(emailregex.test(e.target.value));
+                  if (!emailtouch) setEmailTouch(true);
+                }}
+                onBlur={() => setEmailTouch(true)}
+                placeholder="Enter your email"
+                className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                required
+              />
+              {emailtouch && email !== "" && Validemail !== null && (
+                <span
+                  className={`text-sm mt-1 ${
+                    Validemail ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {Validemail ? "Valid Email" : "Invalid Email"}
+                </span>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block mb-1 font-semibold">Password</label>
+              <div className="flex items-center relative">
+                <input
+                  type={showpassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setValidPassword(passwordregex.test(e.target.value));
+                    if (!passwordtouch) setPasswordTouch(true);
+                  }}
+                  onBlur={() => setPasswordTouch(true)}
+                  placeholder="Enter your password"
+                  className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                  maxLength={16}
+                  required
+                />
+                <div
+                  className="absolute right-3 cursor-pointer text-xl text-gray-600"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showpassword ? <IoEyeOutline /> : <IoEyeOffOutline />}
+                </div>
+              </div>
+              {passwordtouch && password !== "" && Validpassword !== null && (
+                <span
+                  className={`text-sm mt-1 ${
+                    Validpassword ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {Validpassword ? "Valid Password" : "Invalid Password"}
+                </span>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label className="block mb-1 font-semibold">Confirm Password</label>
+              <div className="flex items-center relative">
+                <input
+                  type={Showconfirmpassoword ? "text" : "password"}
+                  value={confirmpassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setValidConfirmPassword(e.target.value === password);
+                    if (!confirmpasswordtouch) setConfirmPasswordTouch(true);
+                  }}
+                  onBlur={() => setConfirmPasswordTouch(true)}
+                  placeholder="Confirm your password"
+                  className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                  required
+                />
+                <div
+                  className="absolute right-3 cursor-pointer text-xl text-gray-600"
+                  onClick={() => setsshowconfirmPassword((prev) => !prev)}
+                >
+                  {Showconfirmpassoword ? <IoEyeOutline /> : <IoEyeOffOutline />}
+                </div>
+              </div>
+              {confirmpasswordtouch &&
+                confirmpassword !== "" &&
+                validconfirmpassword !== null && (
+                  <span
+                    className={`text-sm mt-1 ${
+                      validconfirmpassword ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {validconfirmpassword
+                      ? "Password Match"
+                      : "Password Not Match"}
+                  </span>
+                )}
+            </div>
+
+            {/* Address */}
+            <div>
+              <label className="block mb-1 font-semibold">Address</label>
+              <textarea
+                value={Address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter your address"
+                className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                required
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block mb-1 font-semibold">Phone Number</label>
+              <input
+                type="tel"
+                value={Phone}
+                maxLength={10}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setValidPhone(phoneregex.test(e.target.value));
+                  if (!phonetouch) setPhoneTouch(true);
+                }}
+                onBlur={() => setPhoneTouch(true)}
+                placeholder="91+ 1234567890"
+                className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                required
+              />
+              {phonetouch && Phone !== "" && ValidPhone !== null && (
+                <span
+                  className={`text-sm mt-1 ${
+                    ValidPhone ? "text-green-500" : "text-red-500"
+                  }`}
+                >
+                  {ValidPhone ? "Valid Phone Number" : "Invalid Phone Number"}
+                </span>
+              )}
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label className="block mb-1 font-semibold">Gender</label>
+              <div className="flex space-x-6">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    checked={gender === "male"}
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                    className="h-4 w-4 text-green-500"
+                  />
+                  <span>Male</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    checked={gender === "female"}
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                    className="h-4 w-4 text-green-500"
+                  />
+                  <span>Female</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Birthdate */}
+            <div>
+              <label className="block mb-1 font-semibold">Date Of Birth</label>
+              <input
+                type="date"
+                value={Birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
+                className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring focus:ring-green-300"
+                required
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <p
+            onClick={() => navigate("/login")}
+            className="mt-4 text-center text-gray-500 text-sm cursor-pointer"
+          >
+            Already have an account?{" "}
+            <span className="text-blue-500 underline">Login</span>
+          </p>
+        </div>
       </div>
     </div>
   );

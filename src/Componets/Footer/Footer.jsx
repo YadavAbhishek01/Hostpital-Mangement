@@ -11,7 +11,7 @@ const Footer = () => {
   })
   return (
     <footer className="bg-zinc-100 text-zinc-700 mt-10 z-10 px-10">
-      {!getrole && (  <div className="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
+      {/* {!getrole && (  <div className="container mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <img 
             src="https://prescripto.vercel.app/assets/logo-BNCDj_dh.svg" 
@@ -41,7 +41,7 @@ const Footer = () => {
           <p className="text-sm">📞 +91 8050480504</p>
           <p className="text-sm">📧 capabhi@gmail.com</p>
         </div>
-      </div>)}
+      </div>)} */}
     
 
 

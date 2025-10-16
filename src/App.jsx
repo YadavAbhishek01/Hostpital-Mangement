@@ -21,6 +21,7 @@ import Dashboard from "./Admin/Componets/Hero/Hero";
 import GlobalLoader from "./Componets/Loader/GlobalLoader";
 
 function App() {
+
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 

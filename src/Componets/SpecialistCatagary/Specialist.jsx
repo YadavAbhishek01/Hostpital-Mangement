@@ -2,54 +2,61 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Specialist = () => {
- const navigator=useNavigate()
+  const navigate = useNavigate();
   const categories = [
     {
       name: "General Physicians",
-      img: "data:image/svg+xml,%3csvg%20width='126'%20height='126'%20viewBox='0%200%20126%20126'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='62.8325'%20cy='62.8325'%20r='62.8325'%20fill='url(%23paint0_linear_4741_2362)'/%3e%3cpath%20d='M47.2477%2048.2327L47.7865%2048.1865C47.9905%2048.1634%2048.1752%2048.0903%2048.3292%2047.9825L48.3253%2047.9864C48.8411%2049.7646%2049.4723%2051.6351%2050.2613%2053.5942C51.2736%2056.1575%2052.2704%2058.2628%2053.3866%2060.295L53.2326%2059.9871C53.1402%2061.3881%2053.0286%2062.8275%2052.8824%2064.2208C52.8131%2065.0791%2052.6437%2065.8796%2052.3859%2066.634L52.4051%2066.5647C52.3589%2066.584%2052.2935%2074.5703%2052.2935%2074.5703C52.2973%2079.7778%2055.9037%2084.1385%2060.7532%2085.2971L60.8302%2085.3124C61.0496%2084.7544%2061.5807%2084.3656%2062.2043%2084.3656H64.4135C65.0332%2084.3733%2065.5643%2084.7582%2065.7837%2085.3009L65.7875%2085.3124C70.7256%2084.1501%2074.3473%2079.7894%2074.3666%2074.578C74.3666%2074.578%2074.2319%2066.6225%2074.1626%2066.5686C73.9509%2065.895%2073.7816%2065.1022%2073.693%2064.2862L73.6892%2064.2285C73.5545%2062.8275%2073.466%2061.4227%2073.339%2059.9948C74.2896%2058.2782%2075.2865%2056.1767%2076.164%2054.0098L76.3103%2053.6018C77.0993%2051.6428%2077.7112%2049.7761%2078.2462%2047.9941C78.3963%2048.1019%2078.5811%2048.175%2078.7812%2048.1981H78.7851L79.3277%2048.2443C79.982%2048.3135%2080.5594%2047.7747%2080.6133%2046.9395L81.1983%2039.5074C81.1983%2039.5035%2081.1983%2039.4997%2081.1983%2039.4997C81.1983%2038.8723%2080.7287%2038.3566%2080.1245%2038.2796H80.1168H80.0513C80.2014%2037.1981%2080.2861%2035.9511%2080.2861%2034.6848C80.2861%2031.9213%2079.8781%2029.2502%2079.1199%2026.7369L79.1699%2026.9332C76.9492%2022.0606%2072.5461%2018.5235%2067.2424%2017.5344L67.1423%2017.519C66.0031%2017.2842%2064.6752%2017.1264%2063.3204%2017.0879H63.2858H63.2396C61.8579%2017.1148%2060.53%2017.2688%2059.2445%2017.5421L59.3831%2017.519C53.987%2018.5351%2049.5916%2022.0721%2047.3978%2026.8293L47.3554%2026.9332C46.6395%2029.2425%2046.2277%2031.8982%2046.2277%2034.6463C46.2277%2035.928%2046.3162%2037.1904%2046.4894%2038.422L46.474%2038.2796C45.8621%2038.3489%2045.3887%2038.8608%2045.3887%2039.4843V39.5112L45.9737%2046.9433C46.0276%2047.7978%2046.6126%2048.3135%2047.2438%2048.2443L47.2477%2048.2327Z'%20fill='%23F7DECE'/%3e%3cpath%20d='M104.547%2097.4219C104.278%2085.7214%20103.108%2083.0734%20102.476%2081.2798C102.226%2080.5601%20102.022%2075.6952%2093.9859%2072.5391C89.0594%2070.5993%2082.7011%2070.5608%2077.3204%2068.2861V74.6136C77.3089%2081.4184%2072.4362%2087.08%2065.9894%2088.3155L65.9009%2088.3309C65.7816%2089.0314%2065.1812%2089.5548%2064.4615%2089.5625H64.3922V94.3351C64.3922%2098.9999%2068.1717%20102.779%2072.8365%20102.779C77.5013%20102.779%2081.2809%2098.9999%2081.2809%2094.3351V91.002C78.9408%2090.6517%2077.1665%2088.658%2077.1665%2086.2487C77.1665%2083.5968%2079.318%2081.4453%2081.9698%2081.4453C84.6217%2081.4453%2086.7732%2083.5968%2086.7732%2086.2487C86.7732%2088.3501%2085.4222%2090.136%2083.544%2090.7903L83.5094%2090.8019V94.3351V94.516C83.5094%20100.412%2078.7291%20105.193%2072.8327%20105.193C66.9363%20105.193%2062.156%20100.412%2062.156%2094.516C62.156%2094.4505%2062.156%2094.389%2062.156%2094.3235V94.3312V89.5163C61.4709%2089.4701%2060.9167%2088.9544%2060.8089%2088.2924V88.2847C54.3044%2087.0184%2049.4548%2081.376%2049.4394%2074.5982V68.2207C44.0357%2070.5416%2037.6389%2070.5877%2032.6854%2072.5314C24.6259%2075.6836%2024.4412%2080.537%2024.1949%2081.2683C23.5791%2083.0695%2022.3936%2085.706%2022.1242%2097.4142C22.078%2098.9537%2022.1242%20101.313%2026.7659%20103.376C36.873%20107.34%2049.8936%20108.572%2062.7295%20109.457H63.9611C76.8239%20108.58%2089.8253%20107.352%2099.9247%20103.376C104.547%20101.325%20104.589%2098.9768%20104.547%2097.4219ZM48.0423%2092.6493H43.2466V97.4642H39.8212V92.6647H35.0255V89.2392H39.8212V84.4436H43.2466V89.2392H48.0423V92.6493Z'%20fill='%23577CFF'/%3e%3cpath%20d='M84.5673%2086.2074C84.5673%2084.7756%2083.4088%2083.6133%2081.977%2083.6133C80.5452%2083.6133%2079.3867%2084.7718%2079.3867%2086.2036C79.3867%2087.6353%2080.5452%2088.7938%2081.977%2088.7938C83.4049%2088.7938%2084.5634%2087.6353%2084.5673%2086.2074Z'%20fill='black'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_4741_2362'%20x1='62.8325'%20y1='0'%20x2='62.8325'%20y2='125.665'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%23AFC1DC'/%3e%3cstop%20offset='1'%20stop-color='%23E2E5ED'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e",
+      img: "https://media.istockphoto.com/id/1412630553/vector/smiling-female-doctor-with-crossed-arms-and-stethoscope-vector-flat-illustration.jpg?s=612x612&w=0&k=20&c=hTFRP0GvNI8Nqp94qpsnb4MD-VxuE9kwxAirSBX9xHc=",
     },
     {
       name: "Gynecologist",
-      img: "https://prescripto.vercel.app/assets/Gynecologist-Av1zZu4d.svg",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF6fDM7O4UryyZ8eQA4p_HK-JX9KjUEk9Uvg&s",
     },
     {
       name: "Pediatricians",
-      img: "https://prescripto.vercel.app/assets/Pediatricians-C6nmx5n8.svg",
+      img: "https://i.pinimg.com/736x/ff/c1/1b/ffc11b3c8112fd551a806c0bcf9337d0.jpg",
     },
     {
       name: "Neurologist",
-      img: "https://prescripto.vercel.app/assets/Neurologist-CuaLxNpX.svg",
+      img:" https://media.istockphoto.com/id/1279181570/vector/brain-and-neurology.jpg?s=612x612&w=0&k=20&c=zok3oI4aRzdFwPuE_nnDYFt9pfOMpdvRTMdLM8fGrDA=",
     },
     {
       name: "Gastroenterologist",
-      img: "https://prescripto.vercel.app/assets/Gastroenterologist-CTgzRFeY.svg",
+      img: "https://media.istockphoto.com/id/1308833944/vector/online-gastroenterologist-hepatologist-doctor-internet-consultationt-diagnose-liver-organ.jpg?s=612x612&w=0&k=20&c=QgBQcq4G7WGJA3gC5S9As5HnXNmaFYZ4GHPI4kM1kEU=",
     },
   ];
 
   return (
-    <div className="px-6 md:px-20 py-10 ">
-
-      <div className="text-center mb-4">
-        <h3 className="text-3xl font-semibold text-gray-800">Find by Speciality</h3>
+    <div className="px-6 md:px-20 py-12 bg-gray-50">
+      {/* Section Header */}
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-bold text-sky-600">Find Your Specialist</h2>
         <p className="mt-2 text-gray-600 text-sm md:text-base">
-          Simply browse through our extensive list of trusted doctors, <span className="block">schedule your appointment hassle-free.</span>
+          Browse our specialists and book your appointment easily.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-8">
+      {/* Horizontal Scrollable Cards */}
+      <div className="flex overflow-x-auto gap-6 py-4 scrollbar-hide">
         {categories.map((category, idx) => (
-          <div onClick={()=>navigator('/all-doctor')}
+          <div
             key={idx}
-            className="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={() => navigate("/all-doctor")}
+            className="flex-none w-56 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105 cursor-pointer"
           >
-            <img
-              src={category.img}
-              alt={category.name}
-              className="w-20 h-20 sm:w-24 sm:h-24 mb-2 object-contain"
-            />
-            <p className="text-center text-gray-800 font-medium text-sm sm:text-base">
-              {category.name}
-            </p>
+            <div className="h-48 rounded-t-3xl overflow-hidden">
+              <img
+                src={category.img}
+                alt={category.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-semibold text-gray-800">{category.name}</h3>
+              <p className="mt-1 text-gray-500 text-sm">
+                Trusted & experienced doctors
+              </p>
+            </div>
           </div>
         ))}
       </div>
